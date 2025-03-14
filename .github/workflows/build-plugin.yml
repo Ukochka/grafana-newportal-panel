@@ -1,4 +1,4 @@
-name: Release
+name: Build plugin
 
 on:
   workflow_dispatch:
@@ -16,6 +16,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Enable Corepack and prepare Yarn
+        run: |
+          corepack enable
+          corepack prepare yarn@3.5.1 --activate
+          yarn --version
+          
       - uses: grafana/plugin-actions/build-plugin@add-release-notes-generation
         with:
           # see https://grafana.com/developers/plugin-tools/publish-a-plugin/sign-a-plugin#generate-an-access-policy-token to generate it
